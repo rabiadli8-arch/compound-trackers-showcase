@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compound Trackers — Digitale financiële tools voor ondernemers</title>
+  <meta name="description" content="Showcase van 10 digitale trackers en calculators voor Nederlandse ondernemers, ZZP’ers en DGA’s." />
+  <style>
+    :root{
+      --bg:#050914;
+      --panel:#0c1221;
+      --panel-2:#10192c;
+      --ink:#f5f7fb;
+      --muted:#96a2b8;
+      --soft:#c8d1e3;
+      --line:rgba(255,255,255,.11);
+      --gold:#d7b46a;
+      --gold-2:#f0d78d;
+      --green:#5ee2a0;
+      --red:#ff7a7a;
+      --blue:#74a8ff;
+      --shadow: 0 24px 80px rgba(0,0,0,.42);
+      --radius: 22px;
+      --max: 1180px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 18% 0%, rgba(215,180,106,.18), transparent 33%),
+        radial-gradient(circle at 86% 12%, rgba(116,168,255,.13), transparent 30%),
+        linear-gradient(180deg, #050914 0%, #08101f 45%, #050914 100%);
+      min-height:100vh;
+    }
+
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter: blur(16px);
+      background:rgba(5,9,20,.72);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-inner{
+      max-width:var(--max);
+      margin:auto;
+      padding:16px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.02em}
+    .mark{
+      width:38px;height:38px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--gold),#806531);
+      color:#080b12;
+      box-shadow:0 10px 30px rgba(215,180,106,.24);
+      font-weight:900;
+    }
+    .nav-links{display:flex;gap:18px;color:var(--soft);font-size:14px}
+    .nav-links a:hover{color:var(--ink)}
+    .nav-cta{
+      padding:11px 16px;border-radius:999px;
+      background:var(--ink);color:#070a11;font-weight:800;font-size:14px;
+    }
+
+    .hero{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:86px 22px 52px;
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap:42px;
+      align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      color:var(--gold-2);
+      border:1px solid rgba(215,180,106,.28);
+      background:rgba(215,180,106,.08);
+      padding:9px 13px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:750;
+      margin-bottom:22px;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(42px, 7vw, 82px);
+      line-height:.94;
+      letter-spacing:-.075em;
+      max-width:830px;
+    }
+    .hero p{
+      color:var(--soft);
+      font-size: clamp(17px, 2vw, 21px);
+      line-height:1.58;
+      max-width:690px;
+      margin:24px 0 0;
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+    .btn{
+      border:0;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:15px 20px;border-radius:999px;
+      font-weight:850;
+      cursor:pointer;
+      transition:transform .2s ease, background .2s ease, border-color .2s ease;
+      min-height:48px;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#080b12}
+    .btn-secondary{background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink)}
+
+    .hero-card{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card:before{
+      content:"";position:absolute;inset:-80px -110px auto auto;
+      width:230px;height:230px;border-radius:50%;
+      background:rgba(215,180,106,.16);filter:blur(20px);
+    }
+    .score{
+      position:relative;
+      background:#070c17;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+    }
+    .score-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:22px}
+    .score h2{margin:0;font-size:19px;letter-spacing:-.03em}
+    .score small{display:block;color:var(--muted);margin-top:6px;line-height:1.4}
+    .badge{font-size:12px;font-weight:850;color:#071008;background:var(--green);padding:7px 10px;border-radius:999px;white-space:nowrap}
+    .bars{display:grid;gap:14px}
+    .bar-row{display:grid;gap:7px}
+    .bar-label{display:flex;justify-content:space-between;color:var(--soft);font-size:13px;font-weight:700}
+    .bar{height:10px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+    .bar span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--gold),var(--green));}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+    .mini{padding:14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+    .mini strong{display:block;font-size:22px;letter-spacing:-.04em}
+    .mini span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+
+    .section{max-width:var(--max);margin:0 auto;padding:54px 22px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:24px}
+    .section h2{font-size: clamp(32px, 4vw, 50px);line-height:1;letter-spacing:-.055em;margin:0;max-width:760px}
+    .section-copy{color:var(--muted);line-height:1.6;max-width:480px;margin:0}
+
+    .quadrants{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px;
+    }
+    .quadrant{
+      background:rgba(255,255,255,.045);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+    }
+    .quadrant b{display:block;margin-bottom:8px;color:var(--gold-2)}
+    .quadrant span{color:var(--muted);font-size:14px;line-height:1.45}
+
+    .toolbar{
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:28px 0 20px;
+    }
+    .filter{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--soft);
+      border-radius:999px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:750;
+      font-size:13px;
+    }
+    .filter.active{background:var(--gold);color:#080b12;border-color:transparent}
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .product{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.032));
+      border-radius:var(--radius);
+      padding:20px;
+      min-height:350px;
+      display:flex;
+      flex-direction:column;
+      box-shadow:0 14px 42px rgba(0,0,0,.2);
+      transition:transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .product:hover{transform:translateY(-4px);border-color:rgba(215,180,106,.42);background:rgba(255,255,255,.07)}
+    .product-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+    .num{width:38px;height:38px;border-radius:14px;background:rgba(215,180,106,.12);border:1px solid rgba(215,180,106,.22);color:var(--gold-2);display:grid;place-items:center;font-weight:900}
+    .price{text-align:right}
+    .price strong{font-size:25px;letter-spacing:-.05em}
+    .price span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+    .product h3{font-size:22px;letter-spacing:-.04em;line-height:1.08;margin:0 0 10px}
+    .product .tag{display:inline-flex;width:max-content;margin-bottom:12px;color:var(--blue);background:rgba(116,168,255,.1);border:1px solid rgba(116,168,255,.22);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:850}
+    .product p{color:var(--soft);line-height:1.55;margin:0 0 16px;font-size:14.5px}
+    .list{display:grid;gap:9px;margin:0 0 18px;padding:0;list-style:none;color:var(--muted);font-size:13.5px}
+    .list li{display:flex;gap:8px;line-height:1.35}
+    .list li:before{content:"•";color:var(--gold-2);font-weight:900}
+    .product-foot{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .fit{color:var(--muted);font-size:12px;line-height:1.35}
+    .fit b{color:var(--ink)}
+    .mini-btn{border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--ink);border-radius:999px;padding:10px 12px;font-weight:800;font-size:13px;white-space:nowrap}
+
+    .launch{
+      display:grid;grid-template-columns:1fr .8fr;gap:18px;align-items:stretch;
+    }
+    .launch-card{
+      background:linear-gradient(135deg,rgba(215,180,106,.18),rgba(255,255,255,.04));
+      border:1px solid rgba(215,180,106,.25);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+    .launch-card h3{font-size:34px;line-height:1;letter-spacing:-.05em;margin:0 0 14px}
+    .launch-card p{color:var(--soft);line-height:1.6;margin:0 0 18px}
+    .script{
+      background:#070c17;border:1px solid var(--line);border-radius:24px;padding:22px;color:var(--soft);line-height:1.55;
+      font-size:15px;
+    }
+    .script b{color:var(--ink)}
+
+    footer{border-top:1px solid var(--line);margin-top:40px;color:var(--muted)}
+    .footer-inner{max-width:var(--max);margin:0 auto;padding:28px 22px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:13px}
+
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr;padding-top:58px}
+      .products{grid-template-columns:repeat(2,1fr)}
+      .quadrants{grid-template-columns:repeat(2,1fr)}
+      .launch{grid-template-columns:1fr}
+      .section-head{display:block}.section-copy{margin-top:14px}
+    }
+    @media (max-width: 680px){
+      .nav-links{display:none}
+      .hero{padding-left:16px;padding-right:16px}
+      .section{padding-left:16px;padding-right:16px}
+      .products{grid-template-columns:1fr}
+      .quadrants{grid-template-columns:1fr}
+      .mini-grid{grid-template-columns:1fr}
+      .nav-cta{display:none}
+      .hero-actions .btn{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Compound Trackers home">
+        <span class="mark">CQ</span>
+        <span>Compound Trackers</span>
+      </a>
+      <div class="nav-links" aria-label="Navigatie">
+        <a href="#trackers">Trackers</a>
+        <a href="#quadrant">Framework</a>
+        <a href="#launch">Launch advies</a>
+      </div>
+      <a class="nav-cta" href="#trackers">Bekijk prijzen</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Voor Nederlandse ondernemers, ZZP’ers & DGA’s</div>
+        <h1>Omzet is geen vermogen. Bouw je financiële systeem.</h1>
+        <p>Een showcase van 10 digitale trackers en calculators die jouw volgers direct snappen: belasting, cashflow, BV-keuzes, DGA-geldstromen en privévermogen — allemaal in de taal van Compound Quadrant.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#trackers">Bekijk alle 10 producten →</a>
+          <a class="btn btn-secondary" href="#launch">Start met de beste 3</a>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Compound Quadrant score preview">
+        <div class="score">
+          <div class="score-top">
+            <div>
+              <h2>Compound Quadrant Scan</h2>
+              <small>Laat een ondernemer zien waar zijn financiële systeem lekt.</small>
+            </div>
+            <span class="badge">Lead magnet</span>
+          </div>
+          <div class="bars">
+            <div class="bar-row"><div class="bar-label"><span>Foundation</span><span>62%</span></div><div class="bar"><span style="width:62%"></span></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Fiscal</span><span>44%</span></div><div class="bar"><span style="width:44%"></span></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Control</span><span>31%</span></div><div class="bar"><span style="width:31%"></span></div></div>
+            <div class="bar-row"><div class="bar-label"><span>Private Wealth</span><span>18%</span></div><div class="bar"><span style="width:18%"></span></div></div>
+          </div>
+          <div class="mini-grid">
+            <div class="mini"><strong>10</strong><span>digitale producten</span></div>
+            <div class="mini"><strong>€17–€197</strong><span>adviesprijs range</span></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section" id="quadrant">
+      <div class="section-head">
+        <h2>Niet zomaar spreadsheets. Producten rondom jouw framework.</h2>
+        <p class="section-copy">De beste digitale producten sluiten aan op één van de vier kwadranten. Zo voelen ze logisch voor je volgers én bouwen ze een brug naar je high-ticket traject.</p>
+      </div>
+      <div class="quadrants">
+        <div class="quadrant"><b>Foundation</b><span>Administratie, belastingpot, kosten, financiële noodmap.</span></div>
+        <div class="quadrant"><b>Fiscal</b><span>BV vs eenmanszaak, aftrekposten, DGA salaris/dividend.</span></div>
+        <div class="quadrant"><b>Control</b><span>Cashflow, dashboards, maandelijkse money review.</span></div>
+        <div class="quadrant"><b>Private Wealth</b><span>Privévermogen, hypotheek, beleggen, vermogensgroei.</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="trackers">
+      <div class="section-head">
+        <h2>De 10 trackers die je direct kunt verkopen.</h2>
+        <p class="section-copy">Klik op een filter om de producten per doelgroep te bekijken. Prijzen zijn adviesprijzen voor een eerste launch.</p>
+      </div>
+
+      <div class="toolbar" role="tablist" aria-label="Product filters">
+        <button class="filter active" data-filter="all">Alles</button>
+        <button class="filter" data-filter="zzp">ZZP</button>
+        <button class="filter" data-filter="dga">DGA/BV</button>
+        <button class="filter" data-filter="lead">Lead magnet</button>
+        <button class="filter" data-filter="premium">Premium</button>
+      </div>
+
+      <div class="products" id="productGrid">
+        <article class="product" data-cat="zzp dga fiscal">
+          <div class="product-top"><span class="num">01</span><div class="price"><strong>€49</strong><span>mid-ticket</span></div></div>
+          <span class="tag">Fiscal</span>
+          <h3>BV vs Eenmanszaak Besliscalculator</h3>
+          <p>Laat ondernemers zien wanneer hun rechtsvorm mogelijk geld kost en welke scenario’s ze met hun fiscalist moeten bespreken.</p>
+          <ul class="list"><li>Winstscenario’s vergelijken</li><li>Indicatie belastingdruk</li><li>BV/holding checklist</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> €60K–€200K winst</span><a class="mini-btn" href="#launch">Top pick</a></div>
+        </article>
+
+        <article class="product" data-cat="zzp dga foundation">
+          <div class="product-top"><span class="num">02</span><div class="price"><strong>€27</strong><span>low-ticket</span></div></div>
+          <span class="tag">Foundation</span>
+          <h3>Belastingpot Tracker</h3>
+          <p>Een simpele maandtracker waarmee ondernemers zien welk bedrag niet van hen is: btw, IB/VPB en aankomende kosten.</p>
+          <ul class="list"><li>Btw reservering</li><li>Belastingpot per maand</li><li>Veilig besteedbaar bedrag</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> snelle verkoop</span><a class="mini-btn" href="#launch">Top pick</a></div>
+        </article>
+
+        <article class="product" data-cat="dga wealth">
+          <div class="product-top"><span class="num">03</span><div class="price"><strong>€77</strong><span>mid-ticket</span></div></div>
+          <span class="tag">Private Wealth</span>
+          <h3>DGA Privévermogen Tracker</h3>
+          <p>Voor DGA’s die omzet maken maar willen weten of hun privévermogen daadwerkelijk groeit.</p>
+          <ul class="list"><li>Net worth per maand</li><li>BV-reserves vs privé</li><li>Vermogensdoelen</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> BV-ondernemers</span><a class="mini-btn" href="#">Details</a></div>
+        </article>
+
+        <article class="product" data-cat="lead premium zzp dga">
+          <div class="product-top"><span class="num">04</span><div class="price"><strong>€0–€19</strong><span>lead magnet</span></div></div>
+          <span class="tag">Compound Quadrant</span>
+          <h3>Compound Quadrant Scan</h3>
+          <p>Een scorecard die direct laat zien welk kwadrant lekt en welke prioriteit de ondernemer als eerste moet oppakken.</p>
+          <ul class="list"><li>4 kwadrant scores</li><li>Risiconiveau</li><li>Actieplan light</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> funnel & calls</span><a class="mini-btn" href="#launch">Top pick</a></div>
+        </article>
+
+        <article class="product" data-cat="zzp dga control">
+          <div class="product-top"><span class="num">05</span><div class="price"><strong>€59</strong><span>mid-ticket</span></div></div>
+          <span class="tag">Control</span>
+          <h3>Cashflow Command Center</h3>
+          <p>Een ondernemersdashboard voor omzet, kosten, belasting, buffer en cash runway. Geen winst op papier, maar grip op geld.</p>
+          <ul class="list"><li>3 maanden vooruitblik</li><li>Bufferdoel</li><li>Runway & maandruimte</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> stress/cashflow</span><a class="mini-btn" href="#">Details</a></div>
+        </article>
+
+        <article class="product" data-cat="dga fiscal">
+          <div class="product-top"><span class="num">06</span><div class="price"><strong>€97</strong><span>high mid-ticket</span></div></div>
+          <span class="tag">Fiscal</span>
+          <h3>DGA Salaris & Dividend Planner</h3>
+          <p>Helpt DGA’s begrijpen hoe salaris, dividend, BV-reserves en privéruimte samenhangen.</p>
+          <ul class="list"><li>DGA-loon scenario’s</li><li>Dividendindicatie</li><li>Privéruimte planning</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> serieuze DGA’s</span><a class="mini-btn" href="#">Details</a></div>
+        </article>
+
+        <article class="product" data-cat="zzp dga fiscal foundation">
+          <div class="product-top"><span class="num">07</span><div class="price"><strong>€37</strong><span>low-ticket</span></div></div>
+          <span class="tag">Foundation</span>
+          <h3>Aftrekposten & Kosten Tracker</h3>
+          <p>Een praktische checklist en bonnenlog zodat ondernemers minder zakelijke kosten laten liggen.</p>
+          <ul class="list"><li>Kostencategorieën NL</li><li>Boekhouder-vragenlijst</li><li>Bonnetjeslog</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> brede doelgroep</span><a class="mini-btn" href="#">Details</a></div>
+        </article>
+
+        <article class="product" data-cat="zzp dga wealth">
+          <div class="product-top"><span class="num">08</span><div class="price"><strong>€77</strong><span>mid-ticket</span></div></div>
+          <span class="tag">Private Wealth</span>
+          <h3>Hypotheek & Vermogen Planner</h3>
+          <p>Voor ondernemers die willen weten hoe winst, BV, privévermogen en schulden hun hypotheekpositie beïnvloeden.</p>
+          <ul class="list"><li>Voorbereiding bankgesprek</li><li>Lasten & buffer</li><li>Ondernemerschecklist</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> NL woningmarkt</span><a class="mini-btn" href="#">Details</a></div>
+        </article>
+
+        <article class="product" data-cat="zzp dga foundation wealth">
+          <div class="product-top"><span class="num">09</span><div class="price"><strong>€59</strong><span>mid-ticket</span></div></div>
+          <span class="tag">Foundation</span>
+          <h3>Financiële Noodmap</h3>
+          <p>Een overdraagbaar financieel dossier voor ondernemers met gezin, BV, verzekeringen, contracten en adviseurs.</p>
+          <ul class="list"><li>Partner-instructies</li><li>BV & bankoverzicht</li><li>Testament-checklist</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> emotionele urgentie</span><a class="mini-btn" href="#">Details</a></div>
+        </article>
+
+        <article class="product" data-cat="premium zzp dga control wealth fiscal foundation">
+          <div class="product-top"><span class="num">10</span><div class="price"><strong>€197</strong><span>premium bundle</span></div></div>
+          <span class="tag">Money OS</span>
+          <h3>Money OS voor Ondernemers</h3>
+          <p>De complete financiële cockpit: belasting, cashflow, vermogen, doelen, maandreview en Compound Quadrant score.</p>
+          <ul class="list"><li>Alles-in-één dashboard</li><li>Maandelijkse money review</li><li>Brug naar high-ticket</li></ul>
+          <div class="product-foot"><span class="fit"><b>Beste voor:</b> hoogste orderwaarde</span><a class="mini-btn" href="#launch">Bundle</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="launch">
+      <div class="section-head">
+        <h2>Launch-volgorde: begin niet met alles tegelijk.</h2>
+        <p class="section-copy">De snelste route is één herkenbare pijn oplossen, daarna je framework introduceren, daarna bundelen.</p>
+      </div>
+      <div class="launch">
+        <div class="launch-card">
+          <h3>Beste eerste 3 producten</h3>
+          <p><b>1. Belastingpot Tracker</b> — snelst te bouwen en direct herkenbare pijn.</p>
+          <p><b>2. BV vs Eenmanszaak Calculator</b> — hoge intentie en veel vragen uit je doelgroep.</p>
+          <p><b>3. Compound Quadrant Scan</b> — beste brug naar adviesgesprekken en je traject.</p>
+          <a class="btn btn-primary" href="#trackers">Terug naar producten →</a>
+        </div>
+        <div class="script">
+          <b>Voorbeeld launch-copy:</b><br><br>
+          Je hebt €20.000 op je zakelijke rekening. Maar hoeveel daarvan is écht van jou?<br><br>
+          Niet je btw. Niet je inkomstenbelasting. Niet je VPB. Niet je kosten van volgende maand.<br><br>
+          Daarom heb ik de Belastingpot Tracker gemaakt: een simpele sheet waarmee je ziet wat je apart moet zetten, wat je veilig kunt uitgeven en hoeveel ruimte je écht hebt.<br><br>
+          Reageer <b>“POT”</b> en ik stuur hem naar je.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>Compound Trackers — showcase concept</span>
+      <span>Draft pricing & product positioning voor Rabi Adli / Geldinstituut</span>
+    </div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('.filter');
+    const products = document.querySelectorAll('.product');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        buttons.forEach(b => b.classList.remove('active'));
+        button.classList.add('active');
+        products.forEach(card => {
+          const visible = filter === 'all' || card.dataset.cat.includes(filter);
+          card.style.display = visible ? 'flex' : 'none';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
